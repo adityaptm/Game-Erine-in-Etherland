@@ -205,9 +205,40 @@
           src="https://cavallery.id/wp-content/uploads/2025/07/erine-50.gif"
           alt="Game Over"
         />
-        <h1 id="gameOverTitle">Game Over!</h1>
-        <p id="gameOverReason">Kamu diserang zombie!</p>
-        <button onclick="location.reload()">Main Lagi</button>
+        <h1
+          id="gameOverTitle"
+          style="
+            color: white !important;
+            font-size: 28px !important;
+            margin-bottom: 10px;
+          "
+        >
+          Game Over!
+        </h1>
+        <p
+          id="gameOverReason"
+          style="
+            color: white !important;
+            font-size: 22px !important;
+            margin-bottom: 20px;
+          "
+        >
+          Kamu diserang zombie!
+        </p>
+        <button
+          onclick="location.reload()"
+          style="
+            font-size: 16px;
+            padding: 10px 20px;
+            background: #00c853;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+          "
+        >
+          Main Lagi
+        </button>
       </div>
 
       <div id="pointDisplay">Point: <span id="pointValue">0</span></div>
