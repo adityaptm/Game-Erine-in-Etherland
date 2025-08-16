@@ -183,7 +183,7 @@
     <div id="gameContainer">
       <img
         id="bgPetir"
-        src="https://cavallery.id/wp-content/uploads/2025/07/langit.png"
+        src="https://cavallery.id/wp-content/uploads/2025/08/langiterine.png"
         alt="Background"
       />
       <canvas id="game" width="1200" height="550"></canvas>
