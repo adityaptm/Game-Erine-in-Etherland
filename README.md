@@ -183,7 +183,7 @@
     <div id="gameContainer">
       <img
         id="bgPetir"
-        src="https://cavallery.id/wp-content/uploads/2025/08/langiterine.png"
+        src="https://cavallery.id/wp-content/uploads/2025/08/etherland.png"
         alt="Background"
       />
       <canvas id="game" width="1200" height="550"></canvas>
