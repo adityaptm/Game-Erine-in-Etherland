@@ -294,7 +294,6 @@
         />
       </audio>
     </div>
-
     <script>
       const horseRunSound = document.getElementById("horseRun");
       const jumpSound = document.getElementById("jumpSound");
@@ -321,7 +320,8 @@
       const pointValueEl = document.getElementById("pointValue");
 
       let pointValue = 0;
-      const groundY = 420;
+      const groundHeight = 40;
+      const groundY = canvas.height - groundHeight; // posisi tanah di bawah
       const gravity = 0.5;
       const jumpPower = -12;
       const keys = {};
@@ -391,6 +391,7 @@
         };
       });
 
+      // tanah dengan jurang
       const groundSegments = [];
       const holePositions = [1000, 1500, 2000, 2800, 3500];
       for (let i = 0; i < 10000; i += 100) {
@@ -398,21 +399,23 @@
           groundSegments.push({ x: i, y: groundY, width: 100 });
       }
 
+      // platform
       const platforms = [];
       let lastPlatformX = 600;
 
       while (lastPlatformX < 7500) {
-        const gap = 350 + Math.floor(Math.random() * 150); // jarak antar platform lebih jauh
+        const gap = 350 + Math.floor(Math.random() * 150);
         const offsetY = Math.floor(Math.random() * 120);
         const yPos = groundY - 50 - offsetY;
         platforms.push({ x: lastPlatformX, y: yPos, width: 100 });
         lastPlatformX += gap;
       }
 
+      // points
       const totalPoints = 18;
       const points = [];
       for (let i = 0; i < totalPoints; i++) {
-        const p = platforms[i % platforms.length]; // looping lagi kalau platform habis
+        const p = platforms[i % platforms.length];
         points.push({
           x: p.x + p.width / 2 - 16,
           y: p.y - 40,
@@ -422,6 +425,7 @@
         });
       }
 
+      // zombies
       const zombies = [];
       for (let i = 1200; i < 7600; i += 1000) {
         zombies.push({
@@ -436,6 +440,7 @@
         });
       }
 
+      // castle
       const castle = {
         x: 7800,
         y: groundY - 240,
@@ -467,22 +472,14 @@
       function startGame() {
         if (gameStarted) return;
         gameStarted = true;
-
-        // Sembunyikan tombol "Mulai Game"
         const startBtn = document.getElementById("startBtn");
         if (startBtn) startBtn.style.display = "none";
-
-        // Sembunyikan footer jika ada
         const footer = document.getElementById("footer");
         if (footer) footer.style.display = "none";
-
-        // Mulai backsound
         if (typeof backsound !== "undefined" && backsound.play) {
           backsound.play().catch(() => {});
         }
-
-        // Jalankan fungsi utama game di sini, contoh:
-        loop(); // Pastikan fungsi loop() sudah didefinisikan sebelumnya
+        loop();
       }
 
       function update() {
@@ -541,7 +538,6 @@
           const v =
             player.y + player.height > z.y + 20 && player.y < z.y + z.height;
           const fromTop = player.dy > 0 && player.y + player.height - z.y < 15;
-
           if (h && v && !fromTop) {
             playerHitZombie = true;
             gameOver("Ratu Erine Diserang Zombie!");
@@ -583,14 +579,19 @@
         ctx.save();
         ctx.translate(-cameraX, 0);
 
+        // tanah
         groundSegments.forEach((g) => {
           ctx.fillStyle = "#4b2e18";
-          ctx.fillRect(g.x, g.y, g.width, canvas.height - g.y);
+          ctx.fillRect(g.x, g.y, g.width, groundHeight);
         });
+
+        // platform
         platforms.forEach((p) => {
           ctx.fillStyle = "#6e4f2a";
           ctx.fillRect(p.x, p.y, p.width, 15);
         });
+
+        // point
         points.forEach((pt) => {
           if (!pt.collected) {
             ctx.drawImage(
@@ -603,6 +604,7 @@
           }
         });
 
+        // zombie
         zombies.forEach((z, i) => {
           const frame =
             zombieFrames[
@@ -624,6 +626,7 @@
           ctx.restore();
         });
 
+        // castle
         ctx.drawImage(
           spriteImages[
             "https://cavallery.id/wp-content/uploads/2025/08/kerajaan.png"
@@ -634,6 +637,7 @@
           castle.height
         );
 
+        // player
         let frameToDraw = spriteImages[idleFrame];
         if (playerHitZombie) frameToDraw = spriteImages[dizzyFrame];
         else if (!player.onGround) frameToDraw = spriteImages[jumpFrames[0]];
@@ -664,6 +668,7 @@
           );
         }
         ctx.restore();
+
         ctx.restore();
         frameCounter++;
       }
@@ -694,3 +699,6 @@
     </script>
   </body>
 </html>
+
+   
+   
